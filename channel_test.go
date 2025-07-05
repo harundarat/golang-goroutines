@@ -60,3 +60,32 @@ func TestInOutChannel(t *testing.T) {
 
 	time.Sleep(5 * time.Second)
 }
+
+func TestBufferedChannel(t *testing.T) {
+	channel := make(chan string, 3)
+	defer close(channel)
+
+	// channel <- "Harun"
+	// channel <- "Al"
+	// channel <- "Rasyid"
+	// // channel <- "Hehe" // This will make the channel blocked since the buffer is full
+
+	// fmt.Println(<-channel)
+	// fmt.Println(<-channel)
+	// fmt.Println(<-channel)
+
+	go func() {
+		channel <- "Harun"
+		channel <- "Al"
+		channel <- "Rasyid"
+	}()
+
+	go func() {
+		fmt.Println(<-channel)
+		fmt.Println(<-channel)
+		fmt.Println(<-channel)
+	}()
+
+	time.Sleep(2 * time.Second)
+	fmt.Println("Finish")
+}
