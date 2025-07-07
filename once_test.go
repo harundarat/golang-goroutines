@@ -19,7 +19,7 @@ func TestOnce(t *testing.T) {
 	for i := 0; i < 100; i++ {
 		go func() {
 			group.Add(1)
-			once.Do(OnlyOnce)
+			once.Do(OnlyOnce) // This function will only be executed once, no matter how many goroutines call it.
 			group.Done()
 		}()
 	}
